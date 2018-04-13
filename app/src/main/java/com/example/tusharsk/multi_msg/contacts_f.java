@@ -173,8 +173,7 @@ public class contacts_f extends Fragment {
     {
         // phoneNo = txtPhoneNo.getText().toString();
         //message = txtMessage.getText().toString();
-        phoneNo="9873225242";
-        message="hello";
+
         Toast.makeText(getActivity().getApplicationContext(), "buttone clicked", Toast.LENGTH_SHORT).show();
 
 
