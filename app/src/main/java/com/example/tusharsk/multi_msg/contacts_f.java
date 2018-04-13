@@ -1,14 +1,22 @@
 package com.example.tusharsk.multi_msg;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +34,7 @@ import java.util.ArrayList;
 
 public class contacts_f extends Fragment {
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+    Button u;
     ArrayList<String> contact_name=new ArrayList<String>();
     ArrayList<String> contact_number=new ArrayList<String>();
     Button button;
@@ -37,6 +46,19 @@ public class contacts_f extends Fragment {
     RecyclerView recyclerView;
     contacts_list_dapter contacts_list_dapter;
     Button b1;
+
+
+    EditText txtPhoneNo;
+    EditText txtMessage;
+
+    String phoneNo;
+    String message;
+    private final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1,REQUEST_READ_PHONE_STATE=2;
+
+    private final String SENT = "SMS_SENT";
+    private final String DELIVERED = "SMS_DELIVERED";
+    PendingIntent sentPI, deliveredPI;
+    BroadcastReceiver smsSentReceiver, smsDeliveredReceiver;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +72,13 @@ public class contacts_f extends Fragment {
         b1=(Button)view.findViewById(R.id.add_phone_number_3);
         number=(EditText)view.findViewById(R.id.phone_number_3);
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_2);
+        u=(Button)view.findViewById(R.id.u);
+        u.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                send();
+            }
+        });
 
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
@@ -60,6 +89,9 @@ public class contacts_f extends Fragment {
         //load_contacts();
         contact_name=MainActivity.contact_name;
         contact_number=MainActivity.contact_number;
+
+        sentPI = PendingIntent.getBroadcast(getActivity().getApplicationContext(), 0, new Intent(SENT), 0);
+        deliveredPI = PendingIntent.getBroadcast(getActivity().getApplicationContext(), 0, new Intent(DELIVERED), 0);
 
         arrayList = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, contact_name);
         arrayList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -134,5 +166,88 @@ public class contacts_f extends Fragment {
         cursor.close();
 
     }
+
+
+
+    public void send()
+    {
+        // phoneNo = txtPhoneNo.getText().toString();
+        //message = txtMessage.getText().toString();
+
+        Toast.makeText(getActivity().getApplicationContext(), "buttone clicked", Toast.LENGTH_SHORT).show();
+
+
+        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED&&ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
+
+        }
+        else {
+            // checkPermission();
+
+            sendSMS(phoneNo,message);
+        }
+
+    }
+
+    void checkPermission()
+    {
+        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
+        } else {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, message, null, null);
+            Toast.makeText(getActivity().getApplicationContext(), "SMS sent.",
+                    Toast.LENGTH_LONG).show();
+
+            //TODO
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_READ_PHONE_STATE: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    checkPermission();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    sendSMS(phoneNo,message);
+
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+            }
+        }
+
+
+    }
+
+
+    private void sendSMS(String phoneNumber, String message)
+    {
+        PendingIntent pi = PendingIntent.getActivity(getActivity().getApplicationContext(), 0,
+                new Intent(getActivity().getApplicationContext(),MainActivity.class), 0);
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, null, null);
+        Toast.makeText(getActivity().getApplicationContext(), "SMS send", Toast.LENGTH_LONG).show();
+
+    }
+
+
+
+
 
 }
