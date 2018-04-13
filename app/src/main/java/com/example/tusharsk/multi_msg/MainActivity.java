@@ -38,17 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
    // Button btnSendSMS;
-    EditText txtPhoneNo;
-    EditText txtMessage;
 
-    String phoneNo;
-    String message;
-    private final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1,REQUEST_READ_PHONE_STATE=2;
-
-    private final String SENT = "SMS_SENT";
-    private final String DELIVERED = "SMS_DELIVERED";
-    PendingIntent sentPI, deliveredPI;
-    BroadcastReceiver smsSentReceiver, smsDeliveredReceiver;
 
 
     private Toolbar toolbar;
@@ -75,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         load_contacts();
 
-
-        sentPI = PendingIntent.getBroadcast(MainActivity.this, 0, new Intent(SENT), 0);
-        deliveredPI = PendingIntent.getBroadcast(MainActivity.this, 0, new Intent(DELIVERED), 0);
 
 
     }
@@ -169,86 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     //---sends an SMS message to another device---
-
-
-    public void send(View view)
-    {
-        // phoneNo = txtPhoneNo.getText().toString();
-         //message = txtMessage.getText().toString();
-
-        Toast.makeText(getApplicationContext(), "buttone clicked", Toast.LENGTH_SHORT).show();
-
-
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED&&ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
-
-        }
-        else {
-           // checkPermission();
-
-            sendSMS(phoneNo,message);
-        }
-
-    }
-
-    void checkPermission()
-    {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
-        } else {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNo, null, message, null, null);
-            Toast.makeText(getApplicationContext(), "SMS sent.",
-                    Toast.LENGTH_LONG).show();
-
-            //TODO
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_READ_PHONE_STATE: {
-
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    checkPermission();
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    sendSMS(phoneNo,message);
-
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-            }
-        }
-
-
-    }
-
-
-    private void sendSMS(String phoneNumber, String message)
-    {
-        PendingIntent pi = PendingIntent.getActivity(this, 0,
-                new Intent(this,MainActivity.class), 0);
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, null, null);
-        Toast.makeText(getApplicationContext(), "SMS send", Toast.LENGTH_LONG).show();
-
-    }
-
-
 
 
 
