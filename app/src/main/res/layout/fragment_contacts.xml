@@ -7,7 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
         <!-- TODO: Update blank fragment layout -->
         <View
             android:layout_width="match_parent"
@@ -24,13 +25,13 @@
 
 
             <EditText
+                android:id="@+id/phone_number_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:hint="   Write Phone Number here"
-                android:id="@+id/phone_number_3"
-                android:textColorHint="#000000"
                 android:backgroundTint="@android:color/transparent"
+                android:hint="  Enter Number "
+                android:textColorHint="#000000"
 
                 />
             <Button
@@ -62,7 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="3"
-                android:hint=" Write Contact Name Here"
+                android:hint=" Contact Name "
                 android:textColor="#000000"
                 android:textColorHint="#000000"
                 android:paddingLeft="10dp"
@@ -103,20 +104,23 @@
             android:background="#000000"/>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_2"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/recycler_2">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="230dp"></android.support.v7.widget.RecyclerView>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#000000"/>
 
         <Button
+            android:id="@+id/u"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="send"
-            android:id="@+id/u"/>
+            android:layout_height="match_parent"
+            android:text="Type your Message here!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:onClick="sendm"
+            android:textSize="20sp" />
 
 
     </LinearLayout>

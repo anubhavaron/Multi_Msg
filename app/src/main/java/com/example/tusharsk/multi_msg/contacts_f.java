@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
@@ -25,6 +26,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+
+
 
 import java.util.ArrayList;
 
@@ -46,6 +50,9 @@ public class contacts_f extends Fragment {
     RecyclerView recyclerView;
     contacts_list_dapter contacts_list_dapter;
     Button b1;
+
+
+
 
 
     EditText txtPhoneNo;
@@ -76,7 +83,38 @@ public class contacts_f extends Fragment {
         u.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                send();
+
+
+
+                AlertDialog.Builder mBuilder=new AlertDialog.Builder(v.getContext());
+                LayoutInflater mLayoutInflater = LayoutInflater.from(v.getContext());
+                View rootView = mLayoutInflater.inflate(R.layout.dialoge_message, null, false);
+                final Button busend=(Button) rootView.findViewById(R.id.btsend);
+                final EditText etmessage=(EditText) rootView.findViewById(R.id.etmessage);
+
+                busend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        message=etmessage.getText().toString();
+                        if(!message.matches("")){
+
+                             int _i=0;
+                            for(_i=0;_i<contact_new.size();_i=_i+1) {
+                                send(contact_new.get(_i),message);
+                                Toast.makeText(getActivity().getApplicationContext(),"message sent to "+contact_new.get(_i),Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity().getApplicationContext(),"Please Enter Some Text",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+                mBuilder.setView(rootView);
+                AlertDialog dialog=mBuilder.create();
+                dialog.show();
+
             }
         });
 
@@ -169,10 +207,11 @@ public class contacts_f extends Fragment {
 
 
 
-    public void send()
+    public void send(String phone,String message)
     {
         // phoneNo = txtPhoneNo.getText().toString();
         //message = txtMessage.getText().toString();
+
 
         Toast.makeText(getActivity().getApplicationContext(), "buttone clicked", Toast.LENGTH_SHORT).show();
 
@@ -185,8 +224,11 @@ public class contacts_f extends Fragment {
         else {
             // checkPermission();
 
-            sendSMS(phoneNo,message);
+            sendSMS(phone,message);
         }
+
+
+
 
     }
 
