@@ -108,43 +108,67 @@ public class MainActivity extends AppCompatActivity {
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
         }
         //   StringBuilder builder=new StringBuilder();
-        ContentResolver contentResolver=getContentResolver();
-        Cursor cursor=contentResolver.query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null);
 
-        if(cursor.getCount()>0) {
-            while (cursor.moveToNext()) {
 
-                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
-                if (hasPhoneNumber > 0) {
+    }
+
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_READ_CONTACTS: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ContentResolver contentResolver=getContentResolver();
+                    Cursor cursor=contentResolver.query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null);
+
+                    if(cursor.getCount()>0) {
+                        while (cursor.moveToNext()) {
+
+                            String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                            String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                            int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
+                            if (hasPhoneNumber > 0) {
                     /*Cursor cursor2 = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
                             new String[]{id}, null);*/
 
-                    Cursor cursor2 = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID+ " = ?",
-                            new String[] { id },
-                            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+" ASC");
+                                Cursor cursor2 = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                        null,
+                                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID+ " = ?",
+                                        new String[] { id },
+                                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+" ASC");
 
-                    while (cursor2.moveToNext()) {
-                        String phoneNumber = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        //  builder.append("Contact : ").append(name).append(",Phone Number : ").append(phoneNumber).append("\n");
-                        contact_name.add(name);
-                        contact_number.add(phoneNumber);
+                                while (cursor2.moveToNext()) {
+                                    String phoneNumber = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                    //  builder.append("Contact : ").append(name).append(",Phone Number : ").append(phoneNumber).append("\n");
+                                    contact_name.add(name);
+                                    contact_number.add(phoneNumber);
 
+                                }
+                                cursor2.close();
+                            }
+                        }
                     }
-                    cursor2.close();
+                    Toast.makeText(getApplicationContext(),contact_name.size()+"",Toast.LENGTH_LONG).show();
+                    cursor.close();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                    return;
                 }
             }
+
+
+
         }
-        Toast.makeText(getApplicationContext(),contact_name.size()+"",Toast.LENGTH_LONG).show();
-        cursor.close();
+
 
     }
-
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new contacts_f(), "Contacts");
