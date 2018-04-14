@@ -108,6 +108,7 @@ public class contacts_f extends Fragment {
                                 Toast.makeText(getActivity().getApplicationContext(),"message sent to "+contact_new.get(_i),Toast.LENGTH_SHORT).show();
                             }
 
+                            dialog.dismiss();
                         }
                         else
                         {
