@@ -47,12 +47,20 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     static ArrayList<String> contact_name=new ArrayList<String>();
     static ArrayList<String> contact_number=new ArrayList<String>();
+    SaveSettings saveSettings;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        saveSettings= new SaveSettings(getApplicationContext());
+        saveSettings.LoadData();
+        if(saveSettings.UserPresent().matches("0"))
+        {
+            finish();
+        }
         setContentView(R.layout.activity_main);
 
         //btnSendSMS = (Button) findViewById(R.id.btnSendSMS);
