@@ -71,20 +71,20 @@
                 android:backgroundTint="@android:color/transparent"
                 >
             </AutoCompleteTextView>
-            <Button
-                android:layout_width="0dp"
-                android:layout_marginRight="2dp"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
 
+            <Button
+                android:id="@+id/add_contact_number_3"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="5dp"
+
                 android:layout_weight="1"
                 android:background="@drawable/mybutton"
-                android:text="ADD"
-                android:id="@+id/add_contact_number_3"
-                />
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:text="ADD" />
 
         </LinearLayout>
         <View
@@ -106,7 +106,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_2"
             android:layout_width="match_parent"
-            android:layout_height="230dp"></android.support.v7.widget.RecyclerView>
+            android:layout_height="326dp"></android.support.v7.widget.RecyclerView>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -117,9 +117,10 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#90A4AE"
+            android:onClick="sendm"
             android:text="Type your Message here!"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:onClick="sendm"
             android:textSize="20sp" />
 
 

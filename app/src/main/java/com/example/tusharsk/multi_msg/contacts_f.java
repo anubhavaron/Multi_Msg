@@ -93,6 +93,9 @@ public class contacts_f extends Fragment {
                 final Button busend=(Button) rootView.findViewById(R.id.btsend);
                 final EditText etmessage=(EditText) rootView.findViewById(R.id.etmessage);
 
+                mBuilder.setView(rootView);
+                final AlertDialog dialog=mBuilder.create();
+                dialog.show();
                 busend.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -104,6 +107,7 @@ public class contacts_f extends Fragment {
                                 send(contact_new.get(_i),message);
                                 Toast.makeText(getActivity().getApplicationContext(),"message sent to "+contact_new.get(_i),Toast.LENGTH_SHORT).show();
                             }
+
                         }
                         else
                         {
@@ -112,9 +116,9 @@ public class contacts_f extends Fragment {
 
                     }
                 });
-                mBuilder.setView(rootView);
+               /* mBuilder.setView(rootView);
                 AlertDialog dialog=mBuilder.create();
-                dialog.show();
+                dialog.show();*/
 
             }
         });

@@ -16,5 +16,6 @@
         android:id="@+id/btsend"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="#607D8B"
         android:text="Button" />
 </LinearLayout>
