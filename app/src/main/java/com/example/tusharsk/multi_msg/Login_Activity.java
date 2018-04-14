@@ -44,7 +44,7 @@ public class Login_Activity extends AppCompatActivity {
         password=etPassword.getText().toString();
         if(!email.matches("")&&!password.matches(""))
         {
-            String url="https://anubhavaron000001.000webhostapp.com/login.php?name="+email+"&password="+password;
+            String url="https://anubhavaron000001.000webhostapp.com/multi_msg_login.php?phone_number="+email+"&password="+password;
             bt.setEnabled(false);
             btsign.setEnabled(false);
             new MyAsyncTaskgetNews().execute(url);
@@ -106,14 +106,15 @@ public class Login_Activity extends AppCompatActivity {
                 if (json.getString("msg")==null)
                     return;
                 if (json.getString("msg").equalsIgnoreCase("Pass Login")) {
-                    Toast.makeText(getApplicationContext(), json.getString("msg"), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "pass login", Toast.LENGTH_LONG).show();
                     //login
 
                     JSONArray UserInfo=new JSONArray( json.getString("info"));
                     JSONObject UserCreintal= UserInfo.getJSONObject(0);
 
                     SaveSettings saveSettings= new SaveSettings(getApplicationContext());
-                    saveSettings.SaveData(UserCreintal.getString("name"),UserCreintal.getString("email"),UserCreintal.getString("flag"));
+                    saveSettings.SaveData(UserCreintal.getString("email"),UserCreintal.getString("name"),UserCreintal.getString("phone_number"),UserCreintal.getString("password"));
+                    Toast.makeText(getApplicationContext(), UserCreintal.getString("phone_number"), Toast.LENGTH_LONG).show();
                     Intent i= new Intent(Login_Activity.this,MainActivity.class);
                     startActivity(i);
                     finish();
@@ -121,6 +122,8 @@ public class Login_Activity extends AppCompatActivity {
                 }
 
                 if (json.getString("msg").equalsIgnoreCase("cannot login")) {
+                    bt.setEnabled(true);
+                    btsign.setEnabled(true);
                     Toast.makeText(getApplicationContext(),"WRONG EMAIL OR PASSWORD",Toast.LENGTH_SHORT).show();
                 }
 

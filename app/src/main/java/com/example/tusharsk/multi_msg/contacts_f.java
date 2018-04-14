@@ -150,13 +150,6 @@ public class contacts_f extends Fragment {
             }
         }).attachToRecyclerView(recyclerView);
 
-
-
-
-
-
-
-
         //load_contacts();
         contact_name=MainActivity.contact_name;
         contact_number=MainActivity.contact_number;

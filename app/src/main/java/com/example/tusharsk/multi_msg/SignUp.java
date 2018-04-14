@@ -19,7 +19,7 @@ import java.net.URL;
 
 public class SignUp extends AppCompatActivity {
 
-    EditText etemail,etname,etpassword;
+    EditText etemail,etname,etpassword,etphone;
     Button bt;
 
     @Override
@@ -30,18 +30,20 @@ public class SignUp extends AppCompatActivity {
         etemail=(EditText)findViewById(R.id.etemail);
         etname=(EditText)findViewById(R.id.etname);
         etpassword=(EditText)findViewById(R.id.etpassword);
+        etphone=(EditText)findViewById(R.id.phoneNumber);
         bt=(Button) findViewById(R.id.btsignup);
 
     }
 
     public void SignUp(View view) {
-        String e,p,n;
+        String e,p,n,number;
         e=etemail.getText().toString();
         p=etpassword.getText().toString();
         n=etname.getText().toString();
+        number=etphone.getText().toString();
 
-        if(!e.matches("")&&(!p.matches(""))&&(!n.matches(""))){
-            String url="https://anubhavaron000001.000webhostapp.com/signup.php?name="+e+"&email="+n+"&password="+p;
+        if(!e.matches("")&&(!p.matches(""))&&(!n.matches(""))&&(!number.matches(""))){
+            String url="https://anubhavaron000001.000webhostapp.com/multi_msg_signup.php?name="+n+"&email="+e+"&password="+p+"&phone_number="+number;
             bt.setEnabled(false);
             new MyAsyncTaskgetNews().execute(url);
         }

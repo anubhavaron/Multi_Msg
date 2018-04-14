@@ -10,31 +10,37 @@ import android.content.SharedPreferences;
 
 
 public class SaveSettings {
-    public  static String UserID="";
+    public  static String email="";
     public  static String user_name="";
-    public  static String flag="";
+    public  static String phone_number="";
+    public  static String password="";
     Context context;
+
     SharedPreferences ShredRef;
     public  SaveSettings(Context context){
         this.context=context;
         ShredRef=context.getSharedPreferences("myRef",Context.MODE_PRIVATE);
     }
 
-    void SaveData(String UserID,String user_name,String flag){
+    void SaveData(String email,String user_name,String phone_number,String password){
 
         SharedPreferences.Editor editor=ShredRef.edit();
-        editor.putString("UserID",UserID);
+        editor.putString("email",email);
         editor.putString("user_name",user_name);
-        editor.putString("flag",flag);
+        editor.putString("phone_number",phone_number);
+        editor.putString("password",password);
+
+
         editor.commit();
         LoadData();
     }
 
     void LoadData(){
-        UserID= ShredRef.getString("UserID","0");
-        user_name=ShredRef.getString("user_name",null);
-        flag=ShredRef.getString("flag",null);
-        if (UserID.equals("0")){
+        email= ShredRef.getString("email","0");
+        user_name=ShredRef.getString("user_name","0");
+        phone_number=ShredRef.getString("phone_number","0");
+        password=ShredRef.getString("password","0");
+        if (phone_number.equals("0")){
 
             Intent intent=new Intent(context, Login_Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -44,21 +50,13 @@ public class SaveSettings {
     }
     String UserPresent()
     {
-        UserID= ShredRef.getString("UserID","0");
-        if(UserID.equals("0"))
+        phone_number= ShredRef.getString("phone_number","0");
+        if(phone_number.equals("0"))
             return "0";
         else
-            return UserID;
+            return phone_number;
     }
 
-    String Username()
-    {
-        return  user_name;
-    }
-    String Userflag()
-    {
-        return flag;
-    }
     void DeleteData()
     {
         SharedPreferences.Editor editor=ShredRef.edit();
