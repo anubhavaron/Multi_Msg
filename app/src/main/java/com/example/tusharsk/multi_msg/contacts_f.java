@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,6 +125,33 @@ public class contacts_f extends Fragment {
         recyclerView.setHasFixedSize(true);
         contacts_list_dapter=new contacts_list_dapter(getActivity());
         recyclerView.setAdapter(contacts_list_dapter);
+
+
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int id = (int) viewHolder.itemView.getTag();
+
+                contact_new.remove(id);
+                name_new.remove(id);
+
+                contacts_list_dapter.swapCursor(name_new,contact_new);
+            }
+        }).attachToRecyclerView(recyclerView);
+
+
+
+
+
+
+
+
         //load_contacts();
         contact_name=MainActivity.contact_name;
         contact_number=MainActivity.contact_number;
@@ -143,7 +171,6 @@ public class contacts_f extends Fragment {
                 name_new.add(contacts.getText().toString());
                 contact_new.add(contact_number.get(contact_name.indexOf(contacts.getText().toString())));
                 contacts_list_dapter.swapCursor(name_new,contact_new);
-
 
             }
         });
@@ -267,7 +294,7 @@ public class contacts_f extends Fragment {
 
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(),
-                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                            "SMS failed, please try again.", Toast.LENGTH_LONG).show();
                     return;
                 }
 

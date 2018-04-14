@@ -48,6 +48,7 @@ public class contacts_list_dapter extends RecyclerView.Adapter<contacts_list_dap
     @Override
     public void onBindViewHolder(contacts_list_dapter.NUMBERVIEWHOLDER holder, int position) {
         holder.textView.setText(contact_name.get(position)+" "+contact_number.get(position));
+        holder.itemView.setTag(position);
     }
 
     @Override
