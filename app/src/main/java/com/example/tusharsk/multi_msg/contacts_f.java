@@ -19,6 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.telephony.SmsManager;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by pc on 4/14/2018.
@@ -51,6 +54,7 @@ public class contacts_f extends Fragment {
     RecyclerView recyclerView;
     contacts_list_dapter contacts_list_dapter;
     Button b1;
+    String phone_n="9891855601";
 
 
 
@@ -100,6 +104,25 @@ public class contacts_f extends Fragment {
                     @Override
                     public void onClick(View v) {
                         message=etmessage.getText().toString();
+
+                        Background_adding_history background_adding_history=new Background_adding_history(getActivity().getApplicationContext());
+
+
+                        Calendar cal = Calendar.getInstance();
+
+
+                        int second = cal.get(Calendar.SECOND);
+                        int minute = cal.get(Calendar.MINUTE);
+
+                        int hourofday = cal.get(Calendar.HOUR_OF_DAY);
+                        //Toast.makeText(getActivity().getApplicationContext(),hourofday+":"+minute+":"+second,Toast.LENGTH_LONG).show();
+                        Date d = new Date();
+                        CharSequence s  = DateFormat.format("MMMM d, yyyy ", d.getTime());
+                       // Toast.makeText(getActivity().getApplicationContext(),hourofday+":"+minute+":"+second+""+s,Toast.LENGTH_LONG).show();
+                        background_adding_history.execute(phone_n,message,hourofday+":"+minute+":"+second, String.valueOf(s));
+
+
+
                         if(!message.matches("")){
 
                              int _i=0;
@@ -186,15 +209,15 @@ public class contacts_f extends Fragment {
 
 
     }
-
+    /*
     void load_contacts()
     {
         requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatActivity.checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatActivity.checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
 
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-        }*/
-        //   StringBuilder builder=new StringBuilder();
+            After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+        }
+           StringBuilder builder=new StringBuilder();
         ContentResolver contentResolver=getActivity().getContentResolver();
         Cursor cursor=contentResolver.query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null);
 
@@ -205,10 +228,10 @@ public class contacts_f extends Fragment {
                 String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                 int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
                 if (hasPhoneNumber > 0) {
-                    /*Cursor cursor2 = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    Cursor cursor2 = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            new String[]{id}, null);*/
+                            new String[]{id}, null);
 
                     Cursor cursor2 = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
@@ -231,8 +254,7 @@ public class contacts_f extends Fragment {
         cursor.close();
 
     }
-
-
+    */
 
     public void send(String phone,String message)
     {

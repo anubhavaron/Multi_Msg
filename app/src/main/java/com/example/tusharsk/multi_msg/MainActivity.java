@@ -71,10 +71,31 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    protected void onStart() {
+        contact_name.clear();
+        contact_number.clear();
+        load_contacts();
+        super.onStart();
+    }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    protected void onRestart() {
+        contact_name.clear();
+        contact_number.clear();
         load_contacts();
 
-
-
+        super.onRestart();
     }
 
 
