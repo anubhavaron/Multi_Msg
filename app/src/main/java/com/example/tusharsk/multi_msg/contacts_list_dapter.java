@@ -47,7 +47,7 @@ public class contacts_list_dapter extends RecyclerView.Adapter<contacts_list_dap
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(contacts_list_dapter.NUMBERVIEWHOLDER holder, int position) {
-        holder.textView.setText(contact_name.get(position)+" "+contact_number.get(position));
+        holder.textView.setText("Name : "+contact_name.get(position)+"  ,  Phone No. : "+contact_number.get(position));
         holder.itemView.setTag(position);
     }
 
