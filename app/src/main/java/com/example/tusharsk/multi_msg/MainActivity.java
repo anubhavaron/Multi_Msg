@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        contact_number.clear();
+        contact_name.clear();
         load_contacts();
 
 
@@ -80,14 +82,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     void load_contacts()
     {
+        requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+        /*if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) &&  (ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
 
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) &&  (ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
-            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-        }
+        }*/
         //   StringBuilder builder=new StringBuilder();
 
 

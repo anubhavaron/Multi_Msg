@@ -84,6 +84,7 @@ public class contacts_f extends Fragment {
         b1=(Button)view.findViewById(R.id.add_phone_number_3);
         number=(EditText)view.findViewById(R.id.phone_number_3);
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_2);
+        phone_n=SaveSettings.phone_number;
         u=(Button)view.findViewById(R.id.u);
         u.setOnClickListener(new View.OnClickListener() {
             @Override
