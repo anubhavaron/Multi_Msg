@@ -175,6 +175,7 @@ public class contacts_f extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(),contact_number.get(contact_name.indexOf(contacts.getText().toString())),Toast.LENGTH_LONG).show();
                 name_new.add(contacts.getText().toString());
                 contact_new.add(contact_number.get(contact_name.indexOf(contacts.getText().toString())));
+                contacts.setText("");
                 contacts_list_dapter.swapCursor(name_new,contact_new);
 
             }
@@ -184,6 +185,7 @@ public class contacts_f extends Fragment {
             public void onClick(View v) {
                 name_new.add("no name");
                 contact_new.add(number.getText().toString());
+                number.setText("");
                 contacts_list_dapter.swapCursor(name_new,contact_new);
             }
         });
