@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList<String> contact_name=new ArrayList<String>();
     static ArrayList<String> contact_number=new ArrayList<String>();
     SaveSettings saveSettings;
+
+    //private ProgressBar spinner;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -73,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        //spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        //spinner.setVisibility(View.GONE);
+
         contact_number.clear();
         contact_name.clear();
         load_contacts();
@@ -89,11 +96,48 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     void load_contacts()
     {
-        requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
-        /*if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) &&  (ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
+        //requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) &&  (ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)) {
 
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-        }*/
+        }
+        else {
+            ContentResolver contentResolver=getContentResolver();
+            Cursor cursor=contentResolver.query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null);
+
+            if(cursor.getCount()>0) {
+                while (cursor.moveToNext()) {
+
+                    String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                    String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
+                    if (hasPhoneNumber > 0) {
+                    /*Cursor cursor2 = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{id}, null);*/
+
+                        Cursor cursor2 = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                null,
+                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID+ " = ?",
+                                new String[] { id },
+                                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+" ASC");
+
+                        while (cursor2.moveToNext()) {
+                            String phoneNumber = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            //  builder.append("Contact : ").append(name).append(",Phone Number : ").append(phoneNumber).append("\n");
+                            contact_name.add(name);
+                            contact_number.add(phoneNumber);
+
+                        }
+                        cursor2.close();
+                    }
+                }
+            }
+            Toast.makeText(getApplicationContext(),contact_name.size()+"",Toast.LENGTH_LONG).show();
+
+        }
         //   StringBuilder builder=new StringBuilder();
 
 
@@ -142,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     Toast.makeText(getApplicationContext(),contact_name.size()+"",Toast.LENGTH_LONG).show();
+                    //spinner.setVisibility(View.VISIBLE);
+
                     cursor.close();
                 } else {
                     Toast.makeText(getApplicationContext(),

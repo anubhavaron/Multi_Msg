@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -57,7 +58,7 @@ public class contacts_f extends Fragment {
     String phone_n="9891855601";
 
 
-
+    //private ProgressBar spinner;
 
 
     EditText txtPhoneNo;
@@ -85,7 +86,9 @@ public class contacts_f extends Fragment {
         number=(EditText)view.findViewById(R.id.phone_number_3);
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_2);
         phone_n=SaveSettings.phone_number;
+        //spinner = (ProgressBar)view.findViewById(R.id.progressBar1);
         u=(Button)view.findViewById(R.id.u);
+       // spinner.setVisibility(View.VISIBLE);
         u.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +132,7 @@ public class contacts_f extends Fragment {
                              int _i=0;
                             for(_i=0;_i<contact_new.size();_i=_i+1) {
                                 send(contact_new.get(_i),message);
-                                Toast.makeText(getActivity().getApplicationContext(),"message sent to "+contact_new.get(_i),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity().getApplicationContext(),"Message sent to "+contact_new.get(_i),Toast.LENGTH_SHORT).show();
                             }
 
                             dialog.dismiss();
@@ -278,7 +281,7 @@ public class contacts_f extends Fragment {
         //message = txtMessage.getText().toString();
 
 
-        Toast.makeText(getActivity().getApplicationContext(), "buttone clicked", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity().getApplicationContext(), "buttone clicked", Toast.LENGTH_SHORT).show();
 
 
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED&&ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -304,8 +307,7 @@ public class contacts_f extends Fragment {
         } else {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNo, null, message, null, null);
-            Toast.makeText(getActivity().getApplicationContext(), "SMS sent.",
-                    Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity().getApplicationContext(), "SMS sent.",Toast.LENGTH_LONG).show();
 
             //TODO
         }
@@ -349,7 +351,7 @@ public class contacts_f extends Fragment {
                 new Intent(getActivity().getApplicationContext(),MainActivity.class), 0);
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, null, null);
-        Toast.makeText(getActivity().getApplicationContext(), "SMS send", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity().getApplicationContext(), "SMS send", Toast.LENGTH_LONG).show();
 
     }
 

@@ -4,21 +4,25 @@
     android:layout_height="match_parent"
     android:background="#CFD8DC"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="1">
         <!-- TODO: Update blank fragment layout -->
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#000000"/>
+            android:background="#000000" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="4dp"
             android:layout_marginBottom="1dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             android:paddingBottom="5dp"
             android:paddingTop="5dp">
@@ -34,43 +38,43 @@
                 android:textColorHint="#000000"
 
                 />
-            <Button
-                android:layout_width="0dp"
-                android:layout_marginRight="2dp"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
 
-                android:layout_height="match_parent"
+            <Button
                 android:id="@+id/add_phone_number_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+
                 android:layout_weight="1"
                 android:background="@drawable/mybutton"
-                android:text="ADD"
-                />
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:text="ADD" />
 
 
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#000000"/>
+            android:background="#000000" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
 
             <AutoCompleteTextView
+                android:id="@+id/spinner_2"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="3"
-                android:hint=" Contact Name "
-                android:textColor="#000000"
-                android:textColorHint="#000000"
-                android:paddingLeft="10dp"
-                android:id="@+id/spinner_2"
                 android:backgroundTint="@android:color/transparent"
-                >
-            </AutoCompleteTextView>
+                android:hint=" Contact Name "
+                android:paddingLeft="10dp"
+                android:textColor="#000000"
+                android:textColorHint="#000000"></AutoCompleteTextView>
 
             <Button
                 android:id="@+id/add_contact_number_3"
@@ -87,30 +91,36 @@
                 android:text="ADD" />
 
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#000000"/>
+            android:background="#000000" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CONTACTS SELECTED"
             android:layout_gravity="center"
+            android:text="CONTACTS SELECTED"
             android:textColor="#000000"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#000000"/>
+            android:background="#000000" />
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_2"
             android:layout_width="match_parent"
             android:layout_height="326dp"></android.support.v7.widget.RecyclerView>
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#000000"/>
+            android:background="#000000" />
 
         <Button
             android:id="@+id/u"
@@ -125,7 +135,6 @@
 
 
     </LinearLayout>
-
 
 
 </FrameLayout>

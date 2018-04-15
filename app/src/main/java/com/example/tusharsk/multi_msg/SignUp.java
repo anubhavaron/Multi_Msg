@@ -100,7 +100,9 @@ public class SignUp extends AppCompatActivity {
                 }
 
                 if (json.getString("msg").equalsIgnoreCase("No")) {
-                    Toast.makeText(getApplicationContext(),"Email Already Registered!",Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getApplicationContext(),"Phone Already Registered!",Toast.LENGTH_SHORT).show();
+                    bt.setEnabled(true);
                 }
 
             } catch (Exception ex) {
