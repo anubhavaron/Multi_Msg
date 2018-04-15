@@ -17,5 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#607D8B"
-        android:text="Button" />
+        android:textSize="20sp"
+        android:text="Send" />
 </LinearLayout>

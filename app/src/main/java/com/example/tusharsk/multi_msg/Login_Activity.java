@@ -114,7 +114,7 @@ public class Login_Activity extends AppCompatActivity {
 
                     SaveSettings saveSettings= new SaveSettings(getApplicationContext());
                     saveSettings.SaveData(UserCreintal.getString("email"),UserCreintal.getString("name"),UserCreintal.getString("phone_number"),UserCreintal.getString("password"));
-                    Toast.makeText(getApplicationContext(), UserCreintal.getString("phone_number"), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), UserCreintal.getString("phone_number"), Toast.LENGTH_LONG).show();
                     Intent i= new Intent(Login_Activity.this,MainActivity.class);
                     startActivity(i);
                     finish();
