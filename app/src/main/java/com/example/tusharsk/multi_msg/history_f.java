@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class history_f extends Fragment {
     ArrayList<String> msg=new ArrayList<String>();
     RecyclerView recyclerView;
     History_adapter history_adapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,6 +47,10 @@ public class history_f extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_9);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+
+
+
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -53,6 +59,16 @@ public class history_f extends Fragment {
         recyclerView.setAdapter(history_adapter);
         Background_history background_history=new Background_history();
         background_history.execute();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+            }
+        });
+
+
+
 
 
 
@@ -68,6 +84,23 @@ public class history_f extends Fragment {
         background_history.execute();
 
     }
+
+
+
+    void refreshItems() {
+        // Load items
+        // ...
+
+        // Load complete
+        time.clear();
+        date.clear();
+        msg.clear();
+        Background_history background_history=new Background_history();
+        background_history.execute();
+        mSwipeRefreshLayout.setRefreshing(false);
+
+    }
+
 
 
 
