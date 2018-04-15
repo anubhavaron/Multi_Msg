@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Multi_Msg</string>
+    <string name="action_settings">Log Out</string>
 </resources>

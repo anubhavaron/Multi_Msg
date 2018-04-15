@@ -189,21 +189,36 @@ public class contacts_f extends Fragment {
             public void onClick(View v)
             {
 
-                Toast.makeText(getActivity().getApplicationContext(),contact_number.get(contact_name.indexOf(contacts.getText().toString())),Toast.LENGTH_LONG).show();
-                name_new.add(contacts.getText().toString());
-                contact_new.add(contact_number.get(contact_name.indexOf(contacts.getText().toString())));
-                contacts.setText("");
-                contacts_list_dapter.swapCursor(name_new,contact_new);
+                String temp=contacts.getText().toString();
+                if(!temp.matches("")) {
+                    Toast.makeText(getActivity().getApplicationContext(), contact_number.get(contact_name.indexOf(contacts.getText().toString())), Toast.LENGTH_LONG).show();
+                    name_new.add(contacts.getText().toString());
+                    contact_new.add(contact_number.get(contact_name.indexOf(contacts.getText().toString())));
+                    contacts.setText("");
+                    contacts_list_dapter.swapCursor(name_new, contact_new);
+                }
+                else
+                {
+                    Toast.makeText(getActivity().getApplicationContext(), "Enter Name of Contact!", Toast.LENGTH_LONG).show();
+
+                }
 
             }
         });
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name_new.add("no name");
-                contact_new.add(number.getText().toString());
-                number.setText("");
-                contacts_list_dapter.swapCursor(name_new,contact_new);
+                if(!number.getText().toString().matches("")) {
+                    name_new.add("no name");
+                    contact_new.add(number.getText().toString());
+                    number.setText("");
+                    contacts_list_dapter.swapCursor(name_new, contact_new);
+                }
+                else
+                {
+                    Toast.makeText(getActivity().getApplicationContext(), "Enter Phone Number!", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
